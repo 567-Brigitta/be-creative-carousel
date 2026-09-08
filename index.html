@@ -29,5 +29,11 @@ const ds=[...dots.children];function go(i){index=(i+slides.length)%slides.length
 document.getElementById('prev').onclick=()=>go(index-1);document.getElementById('next').onclick=()=>go(index+1);
 const c=document.getElementById('carousel');c.addEventListener('touchstart',e=>startX=e.touches[0].clientX,{passive:true});
 c.addEventListener('touchend',e=>{if(startX===null)return;const dx=e.changedTouches[0].clientX-startX;if(Math.abs(dx)>45)go(index+(dx<0?1:-1));startX=null},{passive:true});
-document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')go(index-1);if(e.key==='ArrowRight')go(index+1)});go(0);
+document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')go(index-1);if(e.key==='ArrowRight')go(index+1)});
+
+go(0);
+
+let autoplay = setInterval(() => {
+  go(index + 1);
+}, 4000);
 </script></body></html>
