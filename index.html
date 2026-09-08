@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BE Creative Selected Work</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:transparent}
+.carousel{position:relative;width:100%;overflow:hidden;touch-action:pan-y}
+.viewport{overflow:hidden}.track{display:flex;transition:transform .38s ease}
+.slide{flex:0 0 100%;aspect-ratio:16/9}.slide img{display:block;width:100%;height:100%;object-fit:cover}
+.arrow{position:absolute;top:calc(50% - 19px);transform:translateY(-50%);width:38px;height:54px;border:0;background:rgba(255,255,255,.78);color:#333;font:30px/1 Arial,sans-serif;cursor:pointer;padding:0}
+.prev{left:0}.next{right:0}.dots{height:38px;display:flex;align-items:center;justify-content:center;gap:9px}
+.dot{width:8px;height:8px;border:0;border-radius:50%;padding:0;background:#b7b7b7;cursor:pointer}.dot.active{background:#ef9855}
+@media(max-width:600px){.arrow{width:32px;height:46px;font-size:25px}.dots{height:32px;gap:7px}.dot{width:7px;height:7px}}
+</style></head><body>
+<div class="carousel" id="carousel"><div class="viewport"><div class="track" id="track"><div class="slide"><img src="images/01_Huhtamaki.jpg" alt="Huhtamaki packaging design"></div>
+<div class="slide"><img src="images/02_Investa.jpg" alt="Investa annual report design"></div>
+<div class="slide"><img src="images/03_KRB.jpg" alt="Kincoppal-Rose Bay campaign design"></div>
+<div class="slide"><img src="images/04_Jojoba.jpg" alt="The Jojoba Company packaging design"></div>
+<div class="slide"><img src="images/05_Manly_Jazz.jpg" alt="Manly Jazz Festival event design"></div>
+<div class="slide"><img src="images/06_Yarramundi.jpg" alt="Yarramundi Lectures publication design"></div>
+<div class="slide"><img src="images/07_CSIRO.jpg" alt="CSIRO report design"></div>
+<div class="slide"><img src="images/08_Engineers_Australia.jpg" alt="Engineers Australia conference design"></div></div></div>
+<button class="arrow prev" id="prev" aria-label="Previous project">‹</button>
+<button class="arrow next" id="next" aria-label="Next project">›</button>
+<div class="dots" id="dots"></div></div>
+<script>
+const track=document.getElementById('track'),slides=[...track.children],dots=document.getElementById('dots');let index=0,startX=null;
+slides.forEach((_,i)=>{const b=document.createElement('button');b.className='dot';b.onclick=()=>go(i);dots.appendChild(b)});
+const ds=[...dots.children];function go(i){index=(i+slides.length)%slides.length;track.style.transform=`translateX(-${index*100}%)`;ds.forEach((d,n)=>d.classList.toggle('active',n===index))}
+document.getElementById('prev').onclick=()=>go(index-1);document.getElementById('next').onclick=()=>go(index+1);
+const c=document.getElementById('carousel');c.addEventListener('touchstart',e=>startX=e.touches[0].clientX,{passive:true});
+c.addEventListener('touchend',e=>{if(startX===null)return;const dx=e.changedTouches[0].clientX-startX;if(Math.abs(dx)>45)go(index+(dx<0?1:-1));startX=null},{passive:true});
+document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')go(index-1);if(e.key==='ArrowRight')go(index+1)});go(0);
+</script></body></html>
